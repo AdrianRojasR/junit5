@@ -1,7 +1,7 @@
 package com.arojas.test.springboot.app;
 
 import com.arojas.test.springboot.app.models.Cuenta;
-import com.arojas.test.springboot.app.repositories.CuentaRespository;
+import com.arojas.test.springboot.app.repositories.CuentaRepository;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class IntegracionJpaTest {
 
     @Autowired
-    CuentaRespository cuentaRespository;
+    CuentaRepository cuentaRespository;
 
     @Test
     void testFindId() {
@@ -39,7 +39,7 @@ public class IntegracionJpaTest {
     void testFindPersonaTrowException() {
         Optional<Cuenta> cuenta = cuentaRespository.findByPersona("yearr");
 
-        assertThrows(NoSuchElementException.class,cuenta::orElseThrow);
+        assertThrows(NoSuchElementException.class,cuenta::get);
         assertFalse(cuenta.isPresent());
     }
 
@@ -52,7 +52,7 @@ public class IntegracionJpaTest {
     @Test
     void saveCuenta() {
         cuentaRespository.save(new Cuenta(null,"yearr",new BigDecimal(1500)));
-        Cuenta cuenta = cuentaRespository.findByPersona("yearr").orElseThrow();
+        Cuenta cuenta = cuentaRespository.findByPersona("yearr").get();
 
         assertEquals("yearr",cuenta.getPersona());
         assertEquals(3L,cuenta.getId());
@@ -60,10 +60,10 @@ public class IntegracionJpaTest {
 
     @Test
     void delete() {
-        Cuenta cuenta = cuentaRespository.findById(2L).orElseThrow();
+        Cuenta cuenta = cuentaRespository.findById(2L).get();
         cuentaRespository.delete(cuenta);
 
-        assertThrows(NoSuchElementException.class,()-> cuentaRespository.findById(2L).orElseThrow());
+        assertThrows(NoSuchElementException.class,()-> cuentaRespository.findById(2L).get());
 
         assertEquals(1,cuentaRespository.findAll().size())
         ;

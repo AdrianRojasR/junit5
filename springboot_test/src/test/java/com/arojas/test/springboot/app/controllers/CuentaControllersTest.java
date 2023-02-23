@@ -42,7 +42,7 @@ public class CuentaControllersTest {
 
     @Test
     void testDetalle() throws Exception {
-        Mockito.when(cuentaService.findById(1L)).thenReturn(Datos.crearcuenta1().orElseThrow());
+        Mockito.when(cuentaService.findById(1L)).thenReturn(Datos.crearcuenta1().get());
         mockMvc.perform(MockMvcRequestBuilders.get("/api/cuentas/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -66,8 +66,8 @@ public class CuentaControllersTest {
     @Test
     void testListar() throws Exception {
         // Given
-        List<Cuenta> cuentas = Arrays.asList(Datos.crearcuenta1().orElseThrow(),
-                Datos.crearcuenta2().orElseThrow()
+        List<Cuenta> cuentas = Arrays.asList(Datos.crearcuenta1().get(),
+                Datos.crearcuenta2().get()
         );
         Mockito.when(cuentaService.findAll()).thenReturn(cuentas);
 

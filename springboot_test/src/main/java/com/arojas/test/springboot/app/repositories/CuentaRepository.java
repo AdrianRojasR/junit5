@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface CuentaRespository extends JpaRepository<Cuenta, Long> {
+public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
     //List<Cuenta> findAll();
     //Cuenta findById(Long id);
